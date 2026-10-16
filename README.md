@@ -82,3 +82,8 @@ the SQL script's `DEFAULT GETDATE()` values are set in application code instead.
 ## AI Disclosure
 - [ ] State briefly which parts were drafted with AI assistance (planning documents, API code scaffold, tests) and
   what you reviewed, changed and tested yourself.
+
+
+Workflow
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e24d7470-8a68-49b3-9932-fc54e45a67ad" />
+
