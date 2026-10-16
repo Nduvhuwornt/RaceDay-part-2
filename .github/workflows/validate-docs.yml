@@ -1,0 +1,62 @@
+name: Validate Part 1 Docs
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-docs-folder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show what was checked out
+        run: |
+          echo "Branch/ref: $GITHUB_REF"
+          echo "Repository root contents:"
+          ls -la
+
+      - name: Check /docs folder exists
+        run: |
+          if [ ! -d "docs" ]; then
+            echo "::error::/docs folder is missing"
+            exit 1
+          fi
+          echo "Found /docs with:"
+          ls -la docs
+
+      - name: Check ERD file exists
+        run: |
+          if ! ls docs/*ERD* 1> /dev/null 2>&1; then
+            echo "::error::ERD file (PNG or PDF) not found in /docs"
+            exit 1
+          fi
+
+      - name: Check API endpoint plan exists
+        run: |
+          if ! ls docs/*Endpoint*Plan* 1> /dev/null 2>&1; then
+            echo "::error::API Endpoint Plan (PDF or Markdown) not found in /docs"
+            exit 1
+          fi
+
+      - name: Check SQL script exists
+        run: |
+          if ! ls docs/*.sql 1> /dev/null 2>&1; then
+            echo "::error::SQL database script (.sql) not found in /docs"
+            exit 1
+          fi
+
+      - name: Check README exists
+        run: |
+          if [ ! -f "README.md" ]; then
+            echo "::error::README.md is missing from the repository root"
+            exit 1
+          fi
+
+      - name: All required Part 1 files present
+        run: echo "Docs structure validated successfully."
